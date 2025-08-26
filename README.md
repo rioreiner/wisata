@@ -2,6 +2,6 @@
 
 
 # Preview
-![Landing Page](preview/landing.png)
-![Another Screenshot](preview/wisata.png)
-![Admin Dashboard](preview/admin.png)
+![Landing Page](screenshoot/landing.png)
+![Another Screenshot](screenshot/wisata.png)
+![Admin Dashboard](screenshoot/admin.png)
