@@ -44,7 +44,7 @@
                                 </div>
                             </td>
                             <td>
-                                <span class="badge bg-{{ $destination->status == 'active' ? 'success' : 'secondary' }}">
+                                <span class="badge bg-{{ $destination->status == 'active' ? 'success text-white' : 'secondary text-white' }}">
                                     {{ ucfirst($destination->status) }}
                                 </span>
                             </td>

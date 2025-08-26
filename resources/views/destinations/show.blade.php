@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container mt-5"> {{-- tambahkan margin top --}}
     <div class="row">
         <div class="col-md-8">
-            <div class="card">
+            <div class="card shadow-sm mb-4">
                 @if($destination->image)
                     <img src="{{ asset('storage/' . $destination->image) }}" class="card-img-top" alt="{{ $destination->name }}" style="height: 400px; object-fit: cover;">
                 @endif
@@ -34,7 +34,7 @@
             </div>
 
             <!-- Reviews Section -->
-            <div class="card mt-4">
+            <div class="card shadow-sm mb-4">
                 <div class="card-header">
                     <h5>Reviews</h5>
                 </div>
@@ -92,7 +92,7 @@
         </div>
         
         <div class="col-md-4">
-            <div class="card">
+            <div class="card shadow-sm">
                 <div class="card-header">
                     <h6>Quick Info</h6>
                 </div>

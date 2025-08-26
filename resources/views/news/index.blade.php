@@ -4,7 +4,7 @@
 @section('content')
 <div class="container">
     <!-- Hero Section -->
-    <div class="row mb-5">
+    <div class="container pt-5 mb-5">
         <div class="col-12">
             <div class="bg-primary text-white text-center p-5 rounded">
                 <h1 class="display-4 mb-3">Tourism News & Updates</h1>

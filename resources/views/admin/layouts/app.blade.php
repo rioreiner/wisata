@@ -1,101 +1,138 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Admin - {{ config('app.name', 'Tourism System') }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'Dashboard')</title>
+
+    <!-- Tabler CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta20/dist/css/tabler.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta20/dist/css/tabler-flags.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta20/dist/css/tabler-payments.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta20/dist/css/tabler-vendors.min.css" rel="stylesheet"/>
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+
     <style>
-        .sidebar {
-            min-height: 100vh;
-            background-color: #343a40;
+        /* Sidebar text putih */
+        .navbar-vertical .navbar-nav .nav-link,
+        .navbar-vertical .navbar-nav .nav-link .nav-link-title,
+        .navbar-vertical .navbar-brand {
+            color: #fff !important;
         }
-        .sidebar .nav-link {
-            color: #ffffff;
+
+        /* Icon sidebar putih */
+        .navbar-vertical .navbar-nav .nav-link .nav-link-icon i {
+            color: #fff !important;
         }
-        .sidebar .nav-link:hover {
-            background-color: #495057;
-        }
-        .sidebar .nav-link.active {
-            background-color: #007bff;
+
+        /* Hover & active effect */
+        .navbar-vertical .navbar-nav .nav-link:hover,
+        .navbar-vertical .navbar-nav .nav-link.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff !important;
         }
     </style>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 d-md-block sidebar p-0">
-                <div class="position-sticky pt-3">
-                    <div class="text-center text-white mb-4">
-                        <h5>Admin Panel</h5>
-                    </div>
-                    <ul class="nav flex-column">
+    <div class="page">
+        <!-- Sidebar -->
+        <aside class="navbar navbar-vertical navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <h1 class="navbar-brand navbar-brand-autodark">
+                    <a href="{{ route('admin.dashboard') }}">Admin Panel</a>
+                </h1>
+                <div class="collapse navbar-collapse" id="sidebar-menu">
+                    <ul class="navbar-nav pt-lg-3">
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
-                                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                            <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                                <span class="nav-link-icon d-md-none d-lg-inline-block"><i class="fas fa-home"></i></span>
+                                <span class="nav-link-title">Dashboard</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('admin.destinations.*') ? 'active' : '' }}" href="{{ route('admin.destinations.index') }}">
-                                <i class="fas fa-map-marked-alt me-2"></i>Destinations
+                            <a class="nav-link" href="{{ route('admin.destinations.index') }}">
+                                <span class="nav-link-icon"><i class="fas fa-map-marked-alt"></i></span>
+                                Destinations
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('admin.news.*') ? 'active' : '' }}" href="{{ route('admin.news.index') }}">
-                                <i class="fas fa-newspaper me-2"></i>News
+                            <a class="nav-link" href="{{ route('admin.news.index') }}">
+                                <span class="nav-link-icon"><i class="fas fa-newspaper"></i></span>
+                                News
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('admin.reviews.*') ? 'active' : '' }}" href="{{ route('admin.reviews.index') }}">
-                                <i class="fas fa-star me-2"></i>Reviews
+                            <a class="nav-link" href="{{ route('admin.reviews.index') }}">
+                                <span class="nav-link-icon"><i class="fas fa-star"></i></span>
+                                Reviews
                             </a>
                         </li>
-                        <hr class="text-white">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('home') }}">
-                                <i class="fas fa-home me-2"></i>Back to Site
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="fas fa-sign-out-alt me-2"></i>Logout
+
+                        <li class="nav-item mt-3">
+                            <li class="nav-item">
+                                <a class="nav-link text-info" href="{{ url('/') }}" target="_blank">
+                                    <span class="nav-link-icon"><i class="fas fa-globe"></i></span>
+                                    Back to Site
+                                </a>
+                            </li>
+                            <a class="nav-link text-danger" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                <span class="nav-link-icon"><i class="fas fa-sign-out-alt"></i></span>
+                                Logout
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                 @csrf
                             </form>
                         </li>
+
                     </ul>
                 </div>
-            </nav>
+            </div>
+        </aside>
 
-            <!-- Main content -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">@yield('title', 'Dashboard')</h1>
+        <!-- Page wrapper -->
+        <div class="page-wrapper">
+            <!-- Page header -->
+            <header class="navbar navbar-expand-md navbar-light d-print-none">
+                <div class="container-xl">
+                    <div class="navbar-nav flex-row order-md-last">
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown">
+                                <span class="avatar avatar-sm" style="background-image: url('https://ui-avatars.com/api/?name={{ Auth::user()->name }}')"></span>
+                                <div class="d-none d-xl-block ps-2">
+                                    <div>{{ Auth::user()->name }}</div>
+                                    <div class="mt-1 small text-muted">Admin</div>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                <a href="#" class="dropdown-item">Settings</a>
+                                <a href="#" class="dropdown-item">Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="{{ route('logout') }}" class="dropdown-item"
+                                   onclick="event.preventDefault();document.getElementById('logout-form-top').submit();">
+                                   Logout
+                                </a>
+                                <form id="logout-form-top" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </header>
 
-                @if(session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                @endif
-
-                @if(session('error'))
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    </div>
-                @endif
-
-                @yield('content')
-            </main>
+            <!-- Page body -->
+            <div class="page-body">
+                <div class="container-xl mt-4">
+                    @yield('content')
+                </div>
+            </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Tabler JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta20/dist/js/tabler.min.js"></script>
 </body>
 </html>

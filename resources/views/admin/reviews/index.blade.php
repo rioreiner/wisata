@@ -35,7 +35,7 @@
                             @endfor
                         </div>
                         <div class="mb-2">
-                            <span class="badge bg-{{ $review->status == 'approved' ? 'success' : ($review->status == 'pending' ? 'warning' : 'danger') }}">
+                            <span class="badge bg-{{ $review->status == 'approved' ? 'success text-white' : ($review->status == 'pending' ? 'warning text-white' : 'danger text-white') }}">
                                 {{ ucfirst($review->status) }}
                             </span>
                         </div>

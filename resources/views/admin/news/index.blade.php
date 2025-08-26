@@ -1,72 +1,58 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
+
+@section('title', 'Manage News')
 
 @section('content')
-<div class="container">
-    <div class="row mb-4">
-        <div class="col-6">
-            <h1 class="mb-0">Latest News</h1>
-        </div>
-        <div class="col-6 text-end">
-            <!-- Tombol Tambah Artikel Baru -->
-            <a href="{{ route('admin.news.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus"></i> Add New Article
-            </a>
-        </div>
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3 class="card-title">News Articles</h3>
+        <a href="{{ route('admin.news.create') }}" class="btn btn-primary">Add News</a>
     </div>
-
-    <div class="row">
-        @forelse($news as $article)
-            <div class="col-md-6 mb-4">
-                <div class="card h-100 shadow-sm border-0">
-                    @if($article->image)
-                        <img src="{{ asset('storage/' . $article->image) }}" 
-                             class="card-img-top" 
-                             alt="{{ $article->title }}" 
-                             style="height: 250px; object-fit: cover;">
-                    @endif
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $article->title }}</h5>
-                        <p class="card-text">{{ $article->excerpt }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <small class="text-muted">
-                                By {{ $article->author->name ?? 'Admin' }} 
-                                | {{ $article->created_at->format('M d, Y') }}
-                            </small>
-                        </div>
-                    </div>
-                    <div class="card-footer bg-white border-0 d-flex justify-content-between">
-                        <a href="{{ route('news.show', $article->slug) }}" class="btn btn-outline-primary btn-sm">
-                            Read More
-                        </a>
-
-                        @auth
-                            @if(auth()->user()->role === 'admin')
-                                <div class="d-flex">
-                                    <form action="{{ route('admin.news.destroy', $article->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this article?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            @endif
-                        @endauth
-                    </div>
-                </div>
-            </div>
-        @empty
-            <div class="col-12">
-                <div class="alert alert-info text-center">
-                    No news articles available at the moment.
-                </div>
-            </div>
-        @endforelse
-    </div>
-
-    <!-- Pagination -->
-    <div class="d-flex justify-content-center mt-4">
-        {{ $news->links() }}
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Excerpt</th>
+                    <th>Author</th>
+                    <th>Created</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($news as $article)
+                <tr>
+                    <td>
+                        @if($article->image)
+                            <img src="{{ asset('storage/'.$article->image) }}" width="80" class="rounded">
+                        @else
+                            <span class="text-muted">No Image</span>
+                        @endif
+                    </td>
+                    <td>{{ $article->title }}</td>
+                    <td>{{ Str::limit($article->excerpt, 50) }}</td>
+                    <td>{{ $article->author->name ?? 'Admin' }}</td>
+                    <td>{{ $article->created_at->format('M d, Y') }}</td>
+                    <td class="text-center">
+                        <a href="{{ route('admin.news.edit', $article->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="{{ route('admin.news.destroy', $article->id) }}" method="POST" class="d-inline"
+                              onsubmit="return confirm('Delete this news?');">
+                            @csrf @method('DELETE')
+                            <button class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="6" class="text-center text-muted">No news found</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+        <div class="mt-3">
+            {{ $news->links() }}
+        </div>
     </div>
 </div>
 @endsection
